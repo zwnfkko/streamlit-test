@@ -1,291 +1,607 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="?댁???| ?먭린?뚭컻",
-    page_icon="?뙵",
+    page_title="이지원 | 자기소개",
+    page_icon="🌸",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# CSS 而ㅼ뒪? ?ㅽ???st.markdown("""
+st.markdown("""
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
+""", unsafe_allow_html=True)
+
+# ── 팔레트: #d8e2dc  #ffe5d9  #ffcad4  #f4acb7  #9d8189
+st.markdown("""
 <style>
-    .profile-header {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        padding: 2rem;
-        border-radius: 12px;
-        color: white;
-        text-align: center;
-        margin-bottom: 2rem;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+html, body, [class*="css"], [data-testid] {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif !important;
+}
+
+/* ── 기본 배경 ──────────────────────────────────── */
+[data-testid="stAppViewContainer"] > .main { background: #faf8f7; }
+[data-testid="stHeader"] { background: transparent !important; box-shadow: none !important; }
+.block-container { padding: 1.8rem 2rem 3rem !important; max-width: 1080px; }
+
+/* ── 사이드바 ───────────────────────────────────── */
+[data-testid="stSidebar"] { background: #d8e2dc !important; border-right: none; }
+[data-testid="stSidebar"] > div:first-child { padding: 1.8rem 1.2rem; }
+[data-testid="stIconMaterial"] {
+    font-family: 'Material Symbols Rounded' !important;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-size: 20px !important;
+}
+[data-testid="stSidebar"] .stMarkdown a { color: #9d8189 !important; text-decoration: none; font-weight: 600; }
+[data-testid="stSidebar"] hr { border-color: rgba(157,129,137,0.25) !important; }
+
+/* 라디오 메뉴 */
+[data-testid="stSidebar"] .stRadio > label { display: none; }
+[data-testid="stSidebar"] .stRadio > div { gap: 0.25rem; display: flex; flex-direction: column; }
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label input[type="radio"],
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label > div:first-child { display: none !important; }
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {
+    background: transparent;
+    border-radius: 10px;
+    padding: 0.55rem 1rem !important;
+    color: #5a4a4e !important;
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
+    background: rgba(255,255,255,0.55);
+    border-color: rgba(244,172,183,0.4);
+}
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"],
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {
+    background: white;
+    border-color: #f4acb7;
+    color: #9d8189 !important;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(157,129,137,0.12);
+}
+
+/* ── 탭 ─────────────────────────────────────────── */
+[data-baseweb="tab-list"] {
+    background: white !important;
+    border-radius: 12px !important;
+    padding: 4px !important;
+    border: 1px solid #ffcad4 !important;
+    gap: 4px !important;
+    box-shadow: 0 2px 8px rgba(157,129,137,0.06);
+}
+[data-baseweb="tab"] {
+    border-radius: 9px !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+    color: #9d8189 !important;
+    padding: 0.45rem 1.1rem !important;
+    transition: all 0.15s !important;
+}
+[data-baseweb="tab"]:hover { background: #fff0f3 !important; }
+[aria-selected="true"][data-baseweb="tab"] {
+    background: #9d8189 !important;
+    color: white !important;
+}
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"] { display: none !important; }
+
+/* ── expander ───────────────────────────────────── */
+[data-testid="stExpander"] {
+    background: white !important;
+    border: 1px solid #ffcad4 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 8px rgba(157,129,137,0.06) !important;
+    margin-bottom: 0.75rem !important;
+    overflow: hidden !important;
+}
+[data-testid="stExpander"] summary {
+    padding: 0.9rem 1.2rem !important;
+    font-weight: 600 !important;
+    color: #3a2e30 !important;
+}
+[data-testid="stExpander"] summary:hover { background: #fff5f7 !important; }
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] {
+    padding: 0 1.2rem 1rem !important;
+}
+
+/* ── form ────────────────────────────────────────── */
+[data-testid="stTextInput"] > div > div > input,
+[data-testid="stTextArea"] > div > div > textarea,
+[data-baseweb="select"] { border: 1.5px solid #f4acb7 !important; border-radius: 10px !important; background: #fefefe !important; }
+[data-testid="stTextInput"] > div > div > input:focus,
+[data-testid="stTextArea"] > div > div > textarea:focus {
+    box-shadow: 0 0 0 3px rgba(244,172,183,0.22) !important;
+    border-color: #9d8189 !important;
+}
+[data-testid="stFormSubmitButton"] > button {
+    background: linear-gradient(135deg, #f4acb7 0%, #9d8189 100%) !important;
+    color: white !important; border: none !important;
+    border-radius: 12px !important; font-weight: 700 !important;
+    letter-spacing: 0.04em !important; font-size: 0.95rem !important;
+    box-shadow: 0 4px 16px rgba(157,129,137,0.28) !important;
+    padding: 0.65rem 1.5rem !important; width: 100% !important;
+    transition: opacity 0.2s, transform 0.15s !important;
+}
+[data-testid="stFormSubmitButton"] > button:hover { opacity: 0.9 !important; transform: translateY(-1px) !important; }
+
+/* ── alert ───────────────────────────────────────── */
+[data-testid="stAlert"] {
+    border-radius: 12px !important;
+    border-left-width: 4px !important;
+}
+hr { border-color: #f4acb7 !important; opacity: 0.25; margin: 1.2rem 0; }
+
+/* ── custom components ───────────────────────────── */
+
+/* hero */
+.hero {
+    background: linear-gradient(135deg, #f4acb7 0%, #9d8189 100%);
+    border-radius: 22px; padding: 2.6rem 3rem; color: white;
+    margin-bottom: 2rem; position: relative; overflow: hidden;
+    box-shadow: 0 10px 36px rgba(157,129,137,0.28);
+}
+.hero-deco { position: absolute; border-radius: 50%; }
+.hero h1 {
+    font-size: 2.3rem !important; font-weight: 900 !important;
+    color: white !important; margin: 0 0 0.4rem; letter-spacing: -0.03em; line-height: 1.15;
+}
+.hero h1::after { display: none !important; }
+.hero p { font-size: 1rem; opacity: 0.9; margin: 0; letter-spacing: 0.06em; }
+.hero-chips { margin-top: 1.3rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.hero-chip {
+    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.38);
+    border-radius: 20px; padding: 0.28rem 0.85rem; font-size: 0.8rem; color: white;
+}
+
+/* stats */
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 2rem; }
+.stat-card {
+    background: white; border-radius: 16px; padding: 1.3rem 1rem 1.1rem;
+    text-align: center; border: 1px solid rgba(244,172,183,0.25);
+    box-shadow: 0 2px 12px rgba(157,129,137,0.07);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.stat-card:hover { box-shadow: 0 6px 22px rgba(157,129,137,0.14); transform: translateY(-2px); }
+.stat-v { font-size: 2rem; font-weight: 900; color: #9d8189; line-height: 1; }
+.stat-l { font-size: 0.7rem; color: #bbb; font-weight: 600; margin-top: 0.35rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.stat-s { font-size: 0.78rem; color: #f4acb7; margin-top: 0.2rem; font-weight: 600; }
+
+/* section title */
+.sec-title {
+    font-size: 1.05rem; font-weight: 800; color: #3a2e30;
+    margin: 0 0 1rem; display: flex; align-items: center; gap: 0.6rem; letter-spacing: -0.01em;
+}
+.sec-title::after { content:""; flex:1; height:1px; background: linear-gradient(90deg, rgba(244,172,183,0.6), transparent); }
+
+/* about card */
+.about-card {
+    background: white; border-radius: 16px; padding: 1.5rem 1.6rem;
+    border: 1px solid rgba(244,172,183,0.25); box-shadow: 0 2px 12px rgba(157,129,137,0.07);
+    line-height: 1.85; color: #5a4a4e; font-size: 0.93rem; margin-bottom: 1.2rem;
+}
+
+/* skill bar */
+.skill-row { margin-bottom: 0.9rem; }
+.skill-hd { display: flex; justify-content: space-between; margin-bottom: 0.3rem; align-items: baseline; }
+.skill-name { font-weight: 600; font-size: 0.88rem; color: #3a2e30; }
+.skill-pct  { font-size: 0.78rem; color: #9d8189; font-weight: 700; }
+.skill-bg   { background: #f5f0f1; border-radius: 99px; height: 7px; overflow: hidden; }
+.skill-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #ffcad4, #9d8189); }
+
+/* tag */
+.tag     { display: inline-block; background: #ffcad4; color: #9d8189; border-radius: 20px; font-size: 0.77rem; font-weight: 700; padding: 0.22rem 0.72rem; margin: 0.18rem 0.12rem; }
+.tag-dk  { background: #9d8189; color: white; }
+.tag-sm  { background: #ffe5d9; color: #9d8189; border: 1px solid #f4acb7; }
+
+/* lib grid */
+.lib-grid { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+.lib-item { background: #f5f0f1; border-radius: 8px; padding: 0.28rem 0.65rem; font-size: 0.78rem; font-weight: 600; color: #9d8189; font-family: monospace; }
+
+/* timeline */
+.tl-wrap { position: relative; padding-left: 2.2rem; }
+.tl-wrap::before {
+    content:""; position:absolute; left:7px; top:10px; bottom:0; width:2px;
+    background: linear-gradient(to bottom, #f4acb7 0%, #d8e2dc 100%);
+}
+.tl-item { position: relative; margin-bottom: 1.6rem; }
+.tl-dot {
+    position: absolute; left:-2.2rem; top:8px;
+    width:16px; height:16px; border-radius:50%;
+    background: white; border: 3px solid #f4acb7;
+    box-shadow: 0 0 0 4px rgba(244,172,183,0.18);
+}
+.tl-dot.cur { background: #9d8189; border-color: #9d8189; box-shadow: 0 0 0 4px rgba(157,129,137,0.18); }
+.tl-box {
+    background: white; border-radius: 14px; padding: 1.1rem 1.3rem;
+    border: 1px solid rgba(244,172,183,0.28); box-shadow: 0 2px 10px rgba(157,129,137,0.07);
+}
+.tl-period { font-size: 0.74rem; color: #9d8189; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.tl-company { font-size: 1rem; font-weight: 800; color: #3a2e30; margin-bottom: 0.15rem; }
+.tl-role    { font-size: 0.83rem; color: #9d8189; font-weight: 600; margin-bottom: 0.6rem; display: inline-block; background: #fff0f3; border-radius: 6px; padding: 0.1rem 0.55rem; }
+.tl-desc    { font-size: 0.86rem; color: #666; line-height: 1.75; margin-bottom: 0.6rem; }
+
+/* project card */
+.proj-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.proj-card {
+    background: white; border-radius: 16px; padding: 1.4rem;
+    border: 1px solid rgba(244,172,183,0.25); box-shadow: 0 2px 12px rgba(157,129,137,0.07);
+    display: flex; flex-direction: column; gap: 0.5rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.proj-card:hover { box-shadow: 0 8px 28px rgba(157,129,137,0.15); transform: translateY(-3px); }
+.proj-no   { font-size: 0.7rem; font-weight: 800; color: #f4acb7; letter-spacing: 0.1em; text-transform: uppercase; }
+.proj-name { font-size: 1rem; font-weight: 800; color: #3a2e30; line-height: 1.3; }
+.proj-meta { font-size: 0.75rem; color: #bbb; }
+.proj-desc { font-size: 0.84rem; color: #666; line-height: 1.75; flex: 1; }
+.proj-kpi  {
+    display: inline-block; background: linear-gradient(135deg, #ffe5d9, #ffcad4);
+    color: #9d8189; border-radius: 8px; padding: 0.35rem 0.75rem;
+    font-size: 0.78rem; font-weight: 800; border: 1px solid #f4acb7;
+}
+
+/* info card */
+.info-card { background: white; border-radius: 16px; padding: 1.4rem; border: 1px solid rgba(244,172,183,0.28); box-shadow: 0 2px 12px rgba(157,129,137,0.07); }
+.info-row  { display: flex; align-items: center; gap: 0.8rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(244,172,183,0.2); font-size: 0.88rem; color: #5a4a4e; }
+.info-row:last-child { border-bottom: none; padding-bottom: 0; }
+.info-icon  { font-size: 1rem; width: 1.4rem; flex-shrink: 0; }
+.info-label { font-weight: 700; color: #9d8189; min-width: 55px; font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.info-val a { color: #9d8189; text-decoration: none; font-weight: 600; }
+.info-val a:hover { text-decoration: underline; }
+
+/* cert badge */
+.cert { display: flex; align-items: center; gap: 0.6rem; padding: 0.65rem 0.9rem; border-radius: 12px; margin-bottom: 0.5rem; font-size: 0.87rem; font-weight: 600; }
+.cert.done { background: #ffe5d9; color: #9d8189; border: 1px solid #f4acb7; }
+.cert.wip  { background: #f5f0f1; color: #aaa;    border: 1px solid #e0d8da; }
+
+/* ══ 모바일 반응형 ════════════════════════════════ */
+@media (max-width: 768px) {
+    .block-container { padding: 1rem 0.8rem 3rem !important; }
+    .hero { padding: 1.6rem 1.4rem; border-radius: 16px; }
+    .hero h1 { font-size: 1.55rem !important; }
+    .hero p  { font-size: 0.88rem; }
+    .hero-deco { display: none; }
+    .hero-chips { gap: 0.3rem; }
+    .hero-chip  { font-size: 0.74rem; padding: 0.22rem 0.65rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.65rem; margin-bottom: 1.2rem; }
+    .stat-v { font-size: 1.6rem; }
+    .proj-grid  { grid-template-columns: 1fr; }
+    .tl-wrap    { padding-left: 1.5rem; }
+    .tl-dot     { left: -1.5rem; }
+    .sec-title  { font-size: 0.95rem; }
+}
+@media (max-width: 480px) {
+    .hero h1 { font-size: 1.3rem !important; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+    .stat-card  { padding: 1rem 0.7rem 0.8rem; }
+}
+
+/* ══ 다크모드 ════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+    [data-testid="stAppViewContainer"] > .main { background: #1c1819 !important; }
+
+    /* 카드 계열 */
+    .stat-card, .about-card, .tl-box, .proj-card, .info-card {
+        background: #2a2224 !important;
+        border-color: rgba(244,172,183,0.15) !important;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.25) !important;
     }
-    .profile-name {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin: 0;
-    }
-    .profile-title {
-        font-size: 1.2rem;
-        opacity: 0.9;
-        margin-top: 0.5rem;
-    }
-    .section-card {
-        background: #fff5f7;
-        border-left: 4px solid #f5576c;
-        padding: 1rem 1.5rem;
-        border-radius: 0 8px 8px 0;
-        margin-bottom: 1rem;
-    }
-    .avatar-wrap img {
-        border-radius: 50%;
-        border: 4px solid #f5576c;
-        box-shadow: 0 4px 16px rgba(245,87,108,0.25);
-    }
-    .skill-tag {
-        display: inline-block;
-        background: #f5576c;
-        color: white;
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        margin: 0.2rem;
-    }
-    .contact-item {
-        font-size: 1rem;
-        padding: 0.4rem 0;
-    }
+    /* 텍스트 */
+    .stat-v     { color: #f4acb7 !important; }
+    .stat-l     { color: #6a5558 !important; }
+    .stat-s     { color: #c4848f !important; }
+    .tl-company, .proj-name, .sec-title { color: #eddadd !important; }
+    .tl-desc, .proj-desc, .about-card   { color: #a88e92 !important; }
+    .tl-period, .tl-role, .proj-no      { color: #c4848f !important; }
+    .proj-meta  { color: #6a5558 !important; }
+    .skill-name { color: #d4bfc2 !important; }
+    .info-label { color: #c4848f !important; }
+    .info-row   { color: #b09498 !important; border-color: rgba(244,172,183,0.1) !important; }
+    /* 스킬바 배경 */
+    .skill-bg   { background: #3a2e30 !important; }
+    /* 라이브러리 배지 */
+    .lib-item   { background: #3a2e30 !important; color: #f4acb7 !important; }
+    /* 자격증 */
+    .cert.wip   { background: #2a2224 !important; color: #6a5558 !important; border-color: #3a2e30 !important; }
+    .cert.done  { background: #3a2224 !important; border-color: #6a3a42 !important; }
+    /* 섹션 타이틀 구분선 */
+    .sec-title::after { background: linear-gradient(90deg, rgba(244,172,183,0.4), transparent) !important; }
+    /* 프로젝트 KPI */
+    .proj-kpi   { background: #3a2224 !important; border-color: #6a3a42 !important; }
+    /* 사이드바 */
+    [data-testid="stSidebar"] { background: #1a1416 !important; }
+    [data-testid="stSidebar"] .stMarkdown a { color: #f4acb7 !important; }
+}
 </style>
 """, unsafe_allow_html=True)
 
-# ?? ?ъ씠?쒕컮 ??????????????????????????????????????????
+# ── 사이드바 ──────────────────────────────────────────
 with st.sidebar:
-    st.markdown('<div class="avatar-wrap">', unsafe_allow_html=True)
-    st.image("https://api.dicebear.com/7.x/adventurer/svg?seed=Jiwon&backgroundColor=ffd5dc&hair=long16&hairColor=6a4e35&eyes=variant12&eyebrows=variant08&mouth=variant04&skinColor=f9c9b6", width=160)
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown("### ?댁????뙵")
-    st.markdown("**??ㅽ깮 媛쒕컻??*")
-    st.divider()
-    st.markdown("#### ?곕씫泥?)
-    st.markdown("?벁 zwnfkko@gmail.com")
-    st.markdown("?벑 010-1234-5678")
-    st.markdown("?맩 [github.com/zwnfkko](https://github.com/zwnfkko)")
-    st.divider()
-    menu = st.radio("?섏씠吏 ?대룞", ["?룧 ??, "?뮳 寃쎈젰", "?썱截?湲곗닠?ㅽ깮", "?뱛 ?꾨줈?앺듃", "?벉 ?곕씫?섍린"])
+    st.markdown("""
+    <div style="text-align:center; padding: 0.5rem 0 1rem;">
+        <div style="width:120px; height:120px; border-radius:50%; border:4px solid #f4acb7; box-shadow:0 6px 20px rgba(157,129,137,0.22); background:#ffe5d9; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#f4acb7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+        </div>
+        <div style="margin-top:0.8rem; font-size:1.2rem; font-weight:900; color:#3a2e30; letter-spacing:-0.02em;">이지원</div>
+        <div style="font-size:0.82rem; color:#9d8189; font-weight:600; margin-top:0.15rem; letter-spacing:0.04em;">FULL-STACK DEVELOPER</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# ?? 硫붿씤 ?ㅻ뜑 ??????????????????????????????????????????
+    st.markdown("""
+    <div style="background:rgba(255,255,255,0.45); border-radius:12px; padding:0.9rem 1rem; margin-bottom:1rem; border:1px solid rgba(244,172,183,0.3);">
+        <div style="font-size:0.72rem; font-weight:800; color:#9d8189; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.6rem;">CONTACT</div>
+        <div style="display:flex; gap:0.5rem; align-items:center; font-size:0.84rem; color:#5a4a4e; margin-bottom:0.4rem;">
+            <span>📧</span> <span>zwnfkko@gmail.com</span>
+        </div>
+        <div style="display:flex; gap:0.5rem; align-items:center; font-size:0.84rem; color:#5a4a4e; margin-bottom:0.4rem;">
+            <span>📱</span> <span>010-1234-5678</span>
+        </div>
+        <div style="display:flex; gap:0.5rem; align-items:center; font-size:0.84rem;">
+            <span>🐙</span> <a href="https://github.com/zwnfkko" style="color:#9d8189; font-weight:600; text-decoration:none;">github.com/zwnfkko</a>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    menu = st.radio("메뉴", ["🏠  홈", "💼  경력", "🛠️  기술스택", "📂  프로젝트", "📬  연락하기"], label_visibility="collapsed")
+
+# ── Hero ──────────────────────────────────────────────
 st.markdown("""
-<div class="profile-header">
-    <p class="profile-name">?덈뀞?섏꽭?? ?댁??먯엯?덈떎 ?뙵</p>
-    <p class="profile-title">??ㅽ깮 媛쒕컻??쨌 ?곗씠??遺꾩꽍媛 쨌 臾몄젣 ?닿껐??/p>
+<div class="hero">
+    <div class="hero-deco" style="width:200px;height:200px;background:rgba(255,255,255,0.07);top:-60px;right:80px;"></div>
+    <div class="hero-deco" style="width:120px;height:120px;background:rgba(255,202,212,0.15);bottom:-30px;right:30px;"></div>
+    <div class="hero-deco" style="width:70px;height:70px;background:rgba(255,255,255,0.06);top:30px;right:260px;"></div>
+    <h1>안녕하세요, 이지원입니다 🌸</h1>
+    <p>풀스택 개발자 · 데이터 분석가 · 문제 해결사</p>
+    <div class="hero-chips">
+        <span class="hero-chip">Python</span>
+        <span class="hero-chip">React</span>
+        <span class="hero-chip">FastAPI</span>
+        <span class="hero-chip">Data Analysis</span>
+        <span class="hero-chip">Seoul, Korea</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ?? ??????????????????????????????????????????????????
-if menu == "?룧 ??:
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric("寃쎈젰", "3??, "?좎엯?믪＜?덉뼱")
-    col2.metric("?꾨즺 ?꾨줈?앺듃", "12媛?, "+3 ?ы빐")
-    col3.metric("?ъ슜 ?몄뼱", "5媛吏", "Python, JS ??)
-    col4.metric("?먭꺽利?, "3媛?, "理쒓렐 痍⑤뱷")
+# ── 홈 ────────────────────────────────────────────────
+if menu == "🏠  홈":
+    st.markdown("""
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-v">3년</div><div class="stat-l">경력</div><div class="stat-s">신입 → 주니어</div></div>
+        <div class="stat-card"><div class="stat-v">12개</div><div class="stat-l">완료 프로젝트</div><div class="stat-s">+3 올해</div></div>
+        <div class="stat-card"><div class="stat-v">5가지</div><div class="stat-l">사용 언어</div><div class="stat-s">Python, JS 외</div></div>
+        <div class="stat-card"><div class="stat-v">3개</div><div class="stat-l">자격증</div><div class="stat-s">최근 취득</div></div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.divider()
-
-    col_left, col_right = st.columns([2, 1])
+    col_left, col_right = st.columns([3, 2], gap="large")
 
     with col_left:
-        st.subheader("?뫀 ?뚭컻")
+        st.markdown('<p class="sec-title">👤 소개</p>', unsafe_allow_html=True)
         st.markdown("""
-        <div class="section-card">
-        ?덈뀞?섏꽭?? ???<strong>?댁???/strong>?낅땲??<br><br>
-        ?ъ슜??寃쏀뿕??理쒖슦?좎쑝濡??앷컖?섎뒗 <strong>??ㅽ깮 媛쒕컻??/strong>濡?
-        諛깆뿏?쒕????꾨줎?몄뿏?? ?곗씠??遺꾩꽍源뚯? ??꼻寃??ㅻ９?덈떎.<br><br>
-        ?덈줈??湲곗닠??鍮좊Ⅴ寃??듬뱷?섍퀬 ?怨??묐젰?섏뿬 臾몄젣瑜??닿껐?섎뒗 寃껋쓣 利먭퉩?덈떎.
+        <div class="about-card">
+            안녕하세요! 저는 <strong style="color:#9d8189;">이지원</strong>입니다.<br><br>
+            사용자 경험을 최우선으로 생각하는 <strong style="color:#9d8189;">풀스택 개발자</strong>로,
+            백엔드부터 프론트엔드, 데이터 분석까지 폭넓게 다룹니다.<br><br>
+            새로운 기술을 빠르게 습득하고 팀과 협력하여 문제를 해결하는 것을 즐깁니다.
         </div>
         """, unsafe_allow_html=True)
 
-        st.subheader("?럳 ?숇젰")
+        st.markdown('<p class="sec-title">🎓 학력</p>', unsafe_allow_html=True)
         st.markdown("""
-        | 湲곌컙 | ?숆탳 | ?꾧났 | ?숈쐞 |
+        | 기간 | 학교 | 전공 | 학위 |
         |------|------|------|------|
-        | 2018 ??2022 | ?뗢뿃??숆탳 | 而댄벂?곌났?숆낵 | ?숈궗 |
-        | 2022 ??2024 | ?뗢뿃??숈썝 | ?뚰봽?몄썾?닿났??| ?앹궗 |
+        | 2018 – 2022 | ○○대학교 | 컴퓨터공학과 | 학사 |
+        | 2022 – 2024 | ○○대학원 | 소프트웨어공학 | 석사 |
         """)
 
     with col_right:
-        st.subheader("?뙚 ?듭떖 ??웾")
-        competencies = {
-            "臾몄젣 ?닿껐??: 90,
-            "而ㅻ??덉??댁뀡": 85,
-            "??뚰겕": 95,
-            "?먭린 ?숈뒿": 88,
-            "李쎌쓽??: 80,
-        }
-        for skill, score in competencies.items():
-            st.markdown(f"**{skill}**")
-            st.progress(score / 100)
+        st.markdown('<p class="sec-title">🌟 핵심 역량</p>', unsafe_allow_html=True)
+        competencies = [
+            ("문제 해결력", 90), ("커뮤니케이션", 85),
+            ("팀워크", 95), ("자기 학습", 88), ("창의성", 80),
+        ]
+        bars = "".join([f"""
+        <div class="skill-row">
+            <div class="skill-hd"><span class="skill-name">{n}</span><span class="skill-pct">{v}%</span></div>
+            <div class="skill-bg"><div class="skill-fill" style="width:{v}%"></div></div>
+        </div>""" for n, v in competencies])
+        st.markdown(f'<div style="background:white;border-radius:16px;padding:1.4rem;border:1px solid rgba(244,172,183,0.25);box-shadow:0 2px 12px rgba(157,129,137,0.07);">{bars}</div>', unsafe_allow_html=True)
 
-# ?? 寃쎈젰 ??????????????????????????????????????????????
-elif menu == "?뮳 寃쎈젰":
-    st.subheader("?뮳 寃쎈젰 ?ы빆")
+# ── 경력 ──────────────────────────────────────────────
+elif menu == "💼  경력":
+    st.markdown('<p class="sec-title">💼 경력 사항</p>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="tl-wrap">
+        <div class="tl-item">
+            <div class="tl-dot cur"></div>
+            <div class="tl-box">
+                <div class="tl-period">2024.03 – 현재</div>
+                <div class="tl-company">(주) ABC테크</div>
+                <span class="tl-role">백엔드 개발자</span>
+                <div class="tl-desc">FastAPI 기반 RESTful API 설계 및 개발, PostgreSQL DB 최적화, CI/CD 파이프라인 구축</div>
+                <div>
+                    <span class="tag tag-dk">Python</span><span class="tag tag-dk">FastAPI</span>
+                    <span class="tag tag-dk">PostgreSQL</span><span class="tag tag-dk">Docker</span><span class="tag tag-dk">AWS</span>
+                </div>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-box">
+                <div class="tl-period">2022.07 – 2024.02</div>
+                <div class="tl-company">(주) DEF솔루션</div>
+                <span class="tl-role">풀스택 개발자</span>
+                <div class="tl-desc">React + Django 기반 사내 ERP 시스템 개발, 데이터 시각화 대시보드 구축</div>
+                <div>
+                    <span class="tag tag-dk">React</span><span class="tag tag-dk">Django</span>
+                    <span class="tag tag-dk">MySQL</span><span class="tag tag-dk">Chart.js</span>
+                </div>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-box">
+                <div class="tl-period">2021.01 – 2022.06</div>
+                <div class="tl-company">GHI스타트업</div>
+                <span class="tl-role">인턴 개발자</span>
+                <div class="tl-desc">Python 데이터 파이프라인 개발, Streamlit 대시보드 프로토타이핑</div>
+                <div>
+                    <span class="tag tag-dk">Python</span><span class="tag tag-dk">Pandas</span><span class="tag tag-dk">Streamlit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    experiences = [
-        {
-            "period": "2024.03 ???꾩옱",
-            "company": "(二? ABC?뚰겕",
-            "role": "諛깆뿏??媛쒕컻??,
-            "desc": "FastAPI 湲곕컲 RESTful API ?ㅺ퀎 諛?媛쒕컻, PostgreSQL DB 理쒖쟻?? CI/CD ?뚯씠?꾨씪??援ъ텞",
-            "tags": ["Python", "FastAPI", "PostgreSQL", "Docker", "AWS"],
-        },
-        {
-            "period": "2022.07 ??2024.02",
-            "company": "(二? DEF?붾（??,
-            "role": "??ㅽ깮 媛쒕컻??,
-            "desc": "React + Django 湲곕컲 ?щ궡 ERP ?쒖뒪??媛쒕컻, ?곗씠???쒓컖????쒕낫??援ъ텞",
-            "tags": ["React", "Django", "MySQL", "Chart.js"],
-        },
-        {
-            "period": "2021.01 ??2022.06",
-            "company": "GHI?ㅽ??몄뾽",
-            "role": "?명꽩 媛쒕컻??,
-            "desc": "Python ?곗씠???뚯씠?꾨씪??媛쒕컻, Streamlit ??쒕낫???꾨줈?좏??댄븨",
-            "tags": ["Python", "Pandas", "Streamlit"],
-        },
-    ]
+# ── 기술스택 ───────────────────────────────────────────
+elif menu == "🛠️  기술스택":
+    st.markdown('<p class="sec-title">🛠️ 기술 스택</p>', unsafe_allow_html=True)
+    tab1, tab2, tab3, tab4 = st.tabs(["🐍  백엔드", "🎨  프론트엔드", "🗄️  데이터베이스", "⚙️  DevOps"])
 
-    for exp in experiences:
-        with st.expander(f"**{exp['period']}** | {exp['company']} ??{exp['role']}", expanded=True):
-            st.markdown(f"**??븷:** {exp['role']}")
-            st.markdown(f"**湲곌컙:** {exp['period']}")
-            st.markdown(f"**二쇱슂 ?낅Т:** {exp['desc']}")
-            tags_html = " ".join([f'<span class="skill-tag">{t}</span>' for t in exp["tags"]])
-            st.markdown(f"**?ъ슜 湲곗닠:** {tags_html}", unsafe_allow_html=True)
+    def skill_bars(items):
+        return "".join([f"""
+        <div class="skill-row">
+            <div class="skill-hd"><span class="skill-name">{n}</span><span class="skill-pct">{v}%</span></div>
+            <div class="skill-bg"><div class="skill-fill" style="width:{v}%"></div></div>
+        </div>""" for n, v in items])
 
-# ?? 湲곗닠?ㅽ깮 ???????????????????????????????????????????
-elif menu == "?썱截?湲곗닠?ㅽ깮":
-    st.subheader("?썱截?湲곗닠 ?ㅽ깮")
-
-    tab1, tab2, tab3, tab4 = st.tabs(["?릫 諛깆뿏??, "?렓 ?꾨줎?몄뿏??, "?뾼截??곗씠?곕쿋?댁뒪", "?숋툘 DevOps"])
+    def lib_grid(libs):
+        items = "".join([f'<span class="lib-item">{l}</span>' for l in libs])
+        return f'<div class="lib-grid">{items}</div>'
 
     with tab1:
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2, gap="large")
         with col1:
-            skills = {"Python": 90, "FastAPI": 80, "Django": 75, "Node.js": 65}
-            for s, v in skills.items():
-                st.markdown(f"**{s}**")
-                st.progress(v / 100)
-                st.caption(f"{v}%")
+            st.markdown(skill_bars([("Python", 90), ("FastAPI", 80), ("Django", 75), ("Node.js", 65)]), unsafe_allow_html=True)
         with col2:
-            st.markdown("**二쇱슂 ?쇱씠釉뚮윭由?*")
-            libs = ["Pandas", "NumPy", "SQLAlchemy", "Pydantic", "Celery", "Streamlit"]
-            for l in libs:
-                st.markdown(f"- `{l}`")
+            st.markdown(f'<p style="font-size:0.82rem;font-weight:800;color:#9d8189;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.4rem;">주요 라이브러리</p>{lib_grid(["Pandas","NumPy","SQLAlchemy","Pydantic","Celery","Streamlit"])}', unsafe_allow_html=True)
 
     with tab2:
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2, gap="large")
         with col1:
-            skills = {"React": 80, "TypeScript": 70, "HTML/CSS": 85, "Vue.js": 55}
-            for s, v in skills.items():
-                st.markdown(f"**{s}**")
-                st.progress(v / 100)
-                st.caption(f"{v}%")
+            st.markdown(skill_bars([("React", 80), ("TypeScript", 70), ("HTML/CSS", 85), ("Vue.js", 55)]), unsafe_allow_html=True)
         with col2:
-            st.markdown("**二쇱슂 ?쇱씠釉뚮윭由?*")
-            libs = ["Redux", "Tailwind CSS", "Chart.js", "Axios"]
-            for l in libs:
-                st.markdown(f"- `{l}`")
+            st.markdown(f'<p style="font-size:0.82rem;font-weight:800;color:#9d8189;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.4rem;">주요 라이브러리</p>{lib_grid(["Redux","Tailwind CSS","Chart.js","Axios"])}', unsafe_allow_html=True)
 
     with tab3:
-        skills = {"PostgreSQL": 85, "MySQL": 80, "MongoDB": 65, "Redis": 60}
-        for s, v in skills.items():
-            col1, col2 = st.columns([3, 1])
-            col1.progress(v / 100, text=s)
-            col2.markdown(f"**{v}%**")
+        st.markdown(skill_bars([("PostgreSQL", 85), ("MySQL", 80), ("MongoDB", 65), ("Redis", 60)]), unsafe_allow_html=True)
 
     with tab4:
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2, gap="large")
         with col1:
-            skills = {"Docker": 75, "AWS": 65, "Linux": 80, "Git": 90}
-            for s, v in skills.items():
-                st.markdown(f"**{s}**")
-                st.progress(v / 100)
+            st.markdown(skill_bars([("Docker", 75), ("AWS", 65), ("Linux", 80), ("Git", 90)]), unsafe_allow_html=True)
         with col2:
-            st.markdown("**?먭꺽利?*")
-            st.success("??AWS Solutions Architect Associate")
-            st.success("???뺣낫泥섎━湲곗궗")
-            st.info("?봽 CKAD (痍⑤뱷 以鍮?以?")
+            st.markdown("""
+            <p style="font-size:0.82rem;font-weight:800;color:#9d8189;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.8rem;">자격증</p>
+            <div class="cert done">✅ AWS Solutions Architect Associate</div>
+            <div class="cert done">✅ 정보처리기사</div>
+            <div class="cert wip">🔄 CKAD (취득 준비 중)</div>
+            """, unsafe_allow_html=True)
 
-# ?? ?꾨줈?앺듃 ???????????????????????????????????????????
-elif menu == "?뱛 ?꾨줈?앺듃":
-    st.subheader("?뱛 二쇱슂 ?꾨줈?앺듃")
+# ── 프로젝트 ───────────────────────────────────────────
+elif menu == "📂  프로젝트":
+    st.markdown('<p class="sec-title">📂 주요 프로젝트</p>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="proj-grid">
+        <div class="proj-card">
+            <div class="proj-no">Project 01</div>
+            <div class="proj-name">실시간 주식 대시보드</div>
+            <div class="proj-meta">📅 2024.06 – 2024.09 &nbsp;|&nbsp; 👤 개인 프로젝트</div>
+            <div class="proj-desc">WebSocket으로 실시간 주가 데이터를 수신하여 Streamlit으로 시각화하는 대시보드. 포트폴리오 수익률 분석 기능 포함.</div>
+            <div>
+                <span class="tag">Python</span><span class="tag">Streamlit</span>
+                <span class="tag">WebSocket</span><span class="tag">Plotly</span>
+            </div>
+            <div class="proj-kpi">📈 일 평균 200명 사용</div>
+        </div>
+        <div class="proj-card">
+            <div class="proj-no">Project 02</div>
+            <div class="proj-name">사내 ERP 시스템</div>
+            <div class="proj-meta">📅 2023.01 – 2023.12 &nbsp;|&nbsp; 👤 팀 리드 (4인)</div>
+            <div class="proj-desc">중소기업용 맞춤형 ERP 시스템. 인사·재무·재고 관리 모듈을 통합하여 업무 효율 향상.</div>
+            <div>
+                <span class="tag">React</span><span class="tag">Django</span>
+                <span class="tag">MySQL</span><span class="tag">Docker</span>
+            </div>
+            <div class="proj-kpi">🚀 업무 효율 40% 향상</div>
+        </div>
+        <div class="proj-card">
+            <div class="proj-no">Project 03</div>
+            <div class="proj-name">AI 챗봇 고객센터</div>
+            <div class="proj-meta">📅 2024.01 – 2024.04 &nbsp;|&nbsp; 👤 백엔드 담당</div>
+            <div class="proj-desc">LLM 기반 고객 응대 챗봇. FAQ 자동 응답 및 상담사 연결 기능 구현.</div>
+            <div>
+                <span class="tag">Python</span><span class="tag">LangChain</span>
+                <span class="tag">FastAPI</span><span class="tag">Redis</span>
+            </div>
+            <div class="proj-kpi">⚡ 대기 시간 60% 단축</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    projects = [
-        {
-            "title": "?ㅼ떆媛?二쇱떇 ??쒕낫??,
-            "period": "2024.06 ??2024.09",
-            "desc": "WebSocket?쇰줈 ?ㅼ떆媛?二쇨? ?곗씠?곕? ?섏떊?섏뿬 Streamlit?쇰줈 ?쒓컖?뷀븯????쒕낫?? ?ы듃?대━???섏씡瑜?遺꾩꽍 湲곕뒫 ?ы븿.",
-            "tech": ["Python", "Streamlit", "WebSocket", "Plotly", "PostgreSQL"],
-            "role": "媛쒖씤 ?꾨줈?앺듃",
-            "highlight": "???됯퇏 200紐??ъ슜",
-        },
-        {
-            "title": "?щ궡 ERP ?쒖뒪??,
-            "period": "2023.01 ??2023.12",
-            "desc": "以묒냼湲곗뾽??留욎땄??ERP ?쒖뒪?? ?몄궗쨌?щТ쨌?ш퀬 愿由?紐⑤뱢???듯빀?섏뿬 ?낅Т ?⑥쑉 40% ?μ긽.",
-            "tech": ["React", "Django", "MySQL", "Docker"],
-            "role": "? 由щ뱶 (4??",
-            "highlight": "?낅Т ?⑥쑉 40% ?μ긽",
-        },
-        {
-            "title": "AI 梨쀫큸 怨좉컼?쇳꽣",
-            "period": "2024.01 ??2024.04",
-            "desc": "LLM 湲곕컲 怨좉컼 ?묐? 梨쀫큸. FAQ ?먮룞 ?묐떟 諛??곷떞???곌껐 湲곕뒫 援ы쁽. ?곷떞 ?湲??쒓컙 60% ?⑥텞.",
-            "tech": ["Python", "FastAPI", "LangChain", "Redis", "React"],
-            "role": "諛깆뿏???대떦",
-            "highlight": "?湲??쒓컙 60% ?⑥텞",
-        },
-    ]
-
-    for proj in projects:
-        with st.container(border=True):
-            col1, col2 = st.columns([3, 1])
-            with col1:
-                st.markdown(f"### {proj['title']}")
-                st.caption(f"?뱟 {proj['period']}  |  ?뫀 {proj['role']}")
-                st.markdown(proj["desc"])
-                tags_html = " ".join([f'<span class="skill-tag">{t}</span>' for t in proj["tech"]])
-                st.markdown(tags_html, unsafe_allow_html=True)
-            with col2:
-                st.metric("?깃낵", proj["highlight"])
-
-# ?? ?곕씫?섍린 ???????????????????????????????????????????
-elif menu == "?벉 ?곕씫?섍린":
-    st.subheader("?벉 ?곕씫?섍린")
-
-    col1, col2 = st.columns(2)
+# ── 연락하기 ───────────────────────────────────────────
+elif menu == "📬  연락하기":
+    st.markdown('<p class="sec-title">📬 연락하기</p>', unsafe_allow_html=True)
+    col1, col2 = st.columns(2, gap="large")
 
     with col1:
-        st.markdown("#### 硫붿떆吏 蹂대궡湲?)
+        st.markdown('<p style="font-size:0.82rem;font-weight:800;color:#9d8189;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.8rem;">메시지 보내기</p>', unsafe_allow_html=True)
         with st.form("contact_form"):
-            name = st.text_input("?대쫫")
-            email = st.text_input("?대찓??)
-            subject = st.selectbox("臾몄쓽 ?좏삎", ["?묒뾽 ?쒖븞", "梨꾩슜 臾몄쓽", "湲곗닠 吏덈Ц", "湲고?"])
-            message = st.text_area("硫붿떆吏", height=150)
-            submitted = st.form_submit_button("?꾩넚?섍린", type="primary", use_container_width=True)
+            name    = st.text_input("이름")
+            email   = st.text_input("이메일")
+            subject = st.selectbox("문의 유형", ["협업 제안", "채용 문의", "기술 질문", "기타"])
+            message = st.text_area("메시지", height=140, placeholder="내용을 입력해주세요.")
+            submitted = st.form_submit_button("전송하기 →", type="primary", use_container_width=True)
             if submitted:
                 if name and email and message:
-                    st.success(f"??{name}?? 硫붿떆吏媛 ?꾩넚?섏뿀?듬땲?? 鍮좊Ⅸ ?쒖씪 ?댁뿉 ?듬??쒕━寃좎뒿?덈떎.")
+                    st.success(f"✅ {name}님, 메시지가 전송되었습니다! 빠른 시일 내에 답변 드리겠습니다.")
                 else:
-                    st.error("?대쫫, ?대찓?? 硫붿떆吏瑜?紐⑤몢 ?낅젰?댁＜?몄슂.")
+                    st.error("이름, 이메일, 메시지를 모두 입력해주세요.")
 
     with col2:
-        st.markdown("#### ?곕씫泥??뺣낫")
+        st.markdown('<p style="font-size:0.82rem;font-weight:800;color:#9d8189;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.8rem;">연락처 정보</p>', unsafe_allow_html=True)
         st.markdown("""
-        | | |
-        |--|--|
-        | ?벁 ?대찓??| zwnfkko@google.com |
-        | ?벑 ?꾪솕 | 010-1234-5678 |
-        | ?맩 GitHub | [github.com/zwnfkko](https://github.com/zwnfkko) |
-        | ?뮳 LinkedIn | linkedin.com/in/jiwon |
-        | ?뱧 ?꾩튂 | ?쒖슱?밸퀎??|
-        """)
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-icon">📧</span>
+                <span class="info-label">Email</span>
+                <span class="info-val">zwnfkko@gmail.com</span>
+            </div>
+            <div class="info-row">
+                <span class="info-icon">📱</span>
+                <span class="info-label">Phone</span>
+                <span class="info-val">010-1234-5678</span>
+            </div>
+            <div class="info-row">
+                <span class="info-icon">🐙</span>
+                <span class="info-label">GitHub</span>
+                <span class="info-val"><a href="https://github.com/zwnfkko" target="_blank">github.com/zwnfkko</a></span>
+            </div>
+            <div class="info-row">
+                <span class="info-icon">💼</span>
+                <span class="info-label">LinkedIn</span>
+                <span class="info-val"><a href="#" target="_blank">linkedin.com/in/jiwon</a></span>
+            </div>
+            <div class="info-row">
+                <span class="info-icon">📍</span>
+                <span class="info-label">Location</span>
+                <span class="info-val">서울특별시</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.markdown("#### ?묐떟 媛???쒓컙")
-        st.info("???됱씪 ?ㅼ쟾 10??~ ?ㅽ썑 6??n\n蹂댄넻 24?쒓컙 ?대궡 ?묐떟?⑸땲??")
+        st.markdown("""
+        <div style="margin-top:1rem; background:linear-gradient(135deg,#ffe5d9,#ffcad4); border-radius:12px; padding:1rem 1.2rem; border:1px solid #f4acb7;">
+            <div style="font-size:0.8rem; font-weight:800; color:#9d8189; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:0.4rem;">응답 가능 시간</div>
+            <div style="font-size:0.88rem; color:#5a4a4e; line-height:1.7;">
+                ⏰ 평일 오전 10시 ~ 오후 6시<br>
+                <span style="color:#9d8189; font-weight:600;">보통 24시간 이내 답변드립니다.</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
